@@ -11,16 +11,37 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "BOARD")
+@TableGenerator(name = "BOARD_SEQ_GENERATOR",
+				table = "ALL_SEQUENCES",
+				pkColumnValue = "BOARD_SEQ",
+				initialValue = 0,
+				allocationSize = -1)
 public class Board implements Serializable {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "BOARD_SEQ_GENERATOR")
 	private Long seq;
+	
+	@Column(nullable = false)
 	private String title;
+	
+	@Column(nullable = false)
 	private String writer;
+	
+	@Column(nullable = false)
 	private String content;
+	
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
+	
+	@Column(nullable = false)
 	private Long cnt;
+	
+	@Transient
+	private String exceptValue;
+	
+	
 	
 	private static final long serialVersionUID = 1L;
 
